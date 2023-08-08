@@ -3,6 +3,7 @@ import { API_URL } from "../../constants/env"
 import { setToken } from "../../helpers/auth"
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
+import LoginTemplate from "../templates/LoginTemplate"
 
 const Login = () => {
     const nav = useNavigate() //Se utiliza para poder usas las redirecciones
@@ -28,12 +29,12 @@ const Login = () => {
     }
 
   return (
-    <div>
+   <LoginTemplate>
         <form onSubmit={handleSubmit}>
             <input type="email" name="email" placeholder="Correo electronico" required/>
             <input type="password" name="password" placeholder="Contraseña" required/>
             <button type="submit">Ingresar</button>
-            <Link className="text-gray-500" to="/registro">
+            <Link className="text-gray-500" to="/register">
                 ¿Deseas Registrarte?
             </Link>
            {error && (
@@ -42,7 +43,8 @@ const Login = () => {
                 </p>
                 )}
         </form>
-    </div>
+   </LoginTemplate>
+    
   )
 }
 

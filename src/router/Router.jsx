@@ -4,6 +4,7 @@ import Error404 from "../components/pages/Error404"
 import Products from "../components/pages/Products"
 import App from "../components/templates/App"
 import Login from "../components/pages/Login"
+import Register from "../components/pages/Register"
 
 //Cada ruta es un objeto dentro de este array
 //Se renderiza en raiz App ya que es el template con el menu
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
     {
         path:"/login",
         element: <Login />
-    }   
+    },
+    {
+        path:"/register",
+        element: <Register />
+    }    
 ])
 
 export default router

@@ -1,6 +1,6 @@
 import useFetch from "../../hooks/useFetch"
 
-const Products = () => {
+const Table = () => {
 
  const { data, error, loading } = useFetch("products", headers={
   'Authorization': `Bearer ${localStorage.getItem('tokenUser')}`,
@@ -23,7 +23,7 @@ const Products = () => {
   )
 }
 
-export default Products
+export default Table
 
 
 

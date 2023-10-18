@@ -6,6 +6,7 @@ import App from "../components/templates/App"
 import Login from "../components/pages/Login"
 import Register from "../components/pages/Register"
 import Form from "../components/pages/admin/products/Form"
+import Table from "../components/pages/admin/products/Table"
 
 //Cada ruta es un objeto dentro de este array
 //Se renderiza en raiz App ya que es el template con el menu
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
                 element: <Home />
             },
             {
-                path: "/products",
+                path:"products",
                 element: <Products />,
             }
         ]
@@ -36,9 +37,18 @@ const router = createBrowserRouter([
         element: <Register />
     },
     {
+        path:"/admin/products",
+        element: <Table />
+    },  
+    {
         path:"/admin/products/add",
         element: <Form />
-    }     
+    },  
+    {
+        path:"/admin/products/edit:id",
+        element: <Form/>
+    }
+     
 ])
 
 export default router

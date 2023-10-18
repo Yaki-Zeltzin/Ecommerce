@@ -1,6 +1,6 @@
 import axios from "axios"
 import { API_URL } from "../../constants/env"
-import { setToken } from "../../helpers/auth"
+import { setToken, token } from "../../helpers/auth"
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import LoginTemplate from "../templates/LoginTemplate"
@@ -20,8 +20,14 @@ const Login = () => {
 
         axios.post(`${API_URL}/login`, data)
         .then(resp => {
-            setToken(resp.data.accessToken)
-            nav("/")
+            
+             setToken(resp.data.accessToken)
+              if(resp.data.user.role === "admin"){
+                 nav("/admin/products/add")
+              }else if(resp.data.user.role === "waiter"){
+                 nav("/products")
+              }
+            
         })
         .catch((err) => {
             setError(err)
@@ -29,7 +35,7 @@ const Login = () => {
     }
 
   return (
-   <LoginTemplate>
+   <LoginTemplate title="Iniciar sesión">
         <form onSubmit={handleSubmit}>
             <input type="email" name="email" placeholder="Correo electronico" required/>
             <input type="password" name="password" placeholder="Contraseña" required/>

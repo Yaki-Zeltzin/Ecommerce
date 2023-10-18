@@ -1,8 +1,8 @@
-const LoginTemplate = ({children}) => {
+const LoginTemplate = ({children, title}) => {
   return (
     <div>
 
-    <h4>Iniciar sesion</h4>
+    <h4>{title}</h4>
         {children}
     </div>
   )

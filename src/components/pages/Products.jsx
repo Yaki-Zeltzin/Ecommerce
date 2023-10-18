@@ -1,24 +1,35 @@
-import useFetch from "../../hooks/useFetch"
+import { useEffect, useState } from "react"
+import { API_URL, TOKEN_NAME } from "../../constants/env"
+import { token } from "../../helpers/auth"
+//import useFetch from "../../hooks/useFetch"
+import axios from "axios"
+import ProductCard from "../molecules/header/ProductCard"
 
 const Products = () => {
 
- const { data, error, loading } = useFetch("products", headers={
-  'Authorization': `Bearer ${localStorage.getItem('tokenUser')}`,
-}, )
+  const [data, setData] = useState([])
 
- if(loading) return <h1>CARGANDO...</h1>
- if(error) return <h1>Error en la petición productos</h1>
+useEffect(() => {
+  axios.get(`${API_URL}/products`,{
+    headers: {
+      'Authorization': `Bearer ${token(TOKEN_NAME)}`,
+    },
+  })
+  .then(resp => {
+    setData(resp.data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}, [])
+
 
   return (
     <div>
         <h1>Products</h1>
-       {
-        data.length === 0 ? (<p>No existen productos</p>) : 
-        data.map(prod => (
-          <div key={prod.id}>{prod}</div>
-        ))
-       }
-        
+        {data.map((product) => (
+          <ProductCard key={product.id} product={product}/>
+        ))}
     </div>
   )
 }

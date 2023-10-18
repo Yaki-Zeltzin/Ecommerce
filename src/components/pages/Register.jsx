@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { API_URL } from "../../constants/env"
+import LoginTemplate from "../templates/LoginTemplate"
 
 const Register = () => {
     const nav = useNavigate()
@@ -28,8 +29,7 @@ const Register = () => {
     }
 
     return (
-        <>
-            <h2>Registrate</h2>
+        <LoginTemplate title="Registrate">
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -56,7 +56,7 @@ const Register = () => {
                     </p>
                 )}
             </form>
-        </>
+        </LoginTemplate>
     )
 }
 

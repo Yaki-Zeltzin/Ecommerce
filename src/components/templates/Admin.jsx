@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom"
 import MainHeader from "../organisms/MainHeader"
-import MainMenu from "../molecules/header/MainMenu"
+import AdminMenu from "../molecules/header/AdminMenu"
 
 // ESTA ES LA PLANTILLA/TEMPLATE PARA TODAS LAS PÁGINAS contiene el menu + el componente que quieras
-const App = () => {
+const Admin = () => {
   return (
     <div>
         <MainHeader> 
-          <MainMenu/>
+          <AdminMenu/>
         </MainHeader> 
         <div className="pt-16 max-w-200 m-auto">
           <Outlet />
@@ -16,4 +16,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Admin

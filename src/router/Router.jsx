@@ -7,6 +7,7 @@ import Login from "../components/pages/Login"
 import Register from "../components/pages/Register"
 import Form from "../components/pages/admin/products/Form"
 import Table from "../components/pages/admin/products/Table"
+import Admin from "../components/templates/Admin"
 
 //Cada ruta es un objeto dentro de este array
 //Se renderiza en raiz App ya que es el template con el menu
@@ -37,17 +38,23 @@ const router = createBrowserRouter([
         element: <Register />,
     },
     {
-        path:"/admin/products",
-        element: <Table />,
-    },  
-    {
-        path:"/admin/products/add",
-        element: <Form />,
-    },
-    {
-        path:"/admin/products/edit/:id",
-        element: <Form />,
-    },
+        path: "/admin", //Se crea ruta de administrador con rutas hijo
+        element: <Admin />,
+        children: [
+            {
+                path:"/admin/products",
+                element: <Table />,
+            },  
+            {
+                path:"/admin/products/add",
+                element: <Form />,
+            },
+            {
+                path:"/admin/products/edit/:id",
+                element: <Form />,
+            },
+        ]
+    }
      
 ])
 

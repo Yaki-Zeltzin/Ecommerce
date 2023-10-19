@@ -19,7 +19,6 @@ const Table = () => {
     }
   }
 
-
   useEffect(() => {
     axios.get(`${API_URL}/products`, {
       headers: {
@@ -54,7 +53,7 @@ const Table = () => {
                 <td>{prod.name}</td>
                 <td>{prod.price}</td>
                 <td>
-                  <Link to={`admin/products/edit/${prod.id}`}>Editar</Link>
+                  <Link to={`edit/${prod.id}`}>Editar</Link>
                 </td>
                 <td>
                   <a className="text-red-600 hover:cursor-pointer" 

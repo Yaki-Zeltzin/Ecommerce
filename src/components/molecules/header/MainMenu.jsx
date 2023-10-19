@@ -32,11 +32,18 @@ const MainMenu = () => {
                             </Link>
                         </li>
                     ) : (
+                       <>
+                       <li className="flex items-center">
+                            <Link className="menu-item cursor-pointer" to={"/admin/products"}>
+                                Administrar productos
+                            </Link>
+                        </li>
                         <li className="flex items-center">
                             <a className="menu-item cursor-pointer" onClick={handleSession}>
                                 Cerrar sesión
                             </a>
                         </li>
+                       </>
                     )
                 }
                 

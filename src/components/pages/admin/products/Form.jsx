@@ -1,8 +1,46 @@
 import axios from "axios"
-import {API_URL} from "../../../../constants/env"         
+import {API_URL, TOKEN_NAME} from "../../../../constants/env"         
 import { token } from "../../../../helpers/auth"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+
 
 const Form = () => {
+
+  const nav = useNavigate()
+  const params = useParams()
+  
+  const [product, setProduct] = useState([])
+  const [error, setError] = useState()
+  const [loading, setLoading] = useState()
+
+
+  axios.get(`${API_URL}/products`, {
+    headers: {
+      'Authorization': `Bearer ${token(TOKEN_NAME)}`,
+    },
+  })
+
+  useEffect(()=>{
+    if(params.id) {
+      setLoading(true)
+      axios.get(`${API_URL}/products/${params.id}`, {
+        headers: {
+          'Authorization': `Bearer ${token(TOKEN_NAME)}`,
+        },
+      })
+      .then((resp) => {
+        setProduct(resp.data)
+      })
+      .catch(error => {
+        setError(error)
+      })
+      .finally(()=> {
+        setLoading(false)
+      })
+    }
+  },[])
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -14,31 +52,48 @@ const Form = () => {
             type: e.target.type.value
         }
 
-        axios
-         .post(`${API_URL}/products`, data, {//envia la data en la peticion post
-            headers: {
-                Authorization: `Bearer ${token()}`,
-            },
-         })
-         .then((resp) => {
-            console.log(resp)
-            alert("Producto creado")
-         })
-         .catch(err => {
-            console.log(err)
-            alert("Error al crear productyo")
-         })
+    if(!params.id) {
+      axios
+      .post(`${API_URL}/products`, data, {//envia la data en la peticion post
+         headers: {
+             Authorization: `Bearer ${token()}`,
+         },
+      })
+      .then(() => {
+         nav("/admin/products")
+      })
+      .catch(err => {
+         setError(err)
+      },[])
+    } else {
+      axios
+      .put(`${API_URL}/products/${params.id}`, data, {//envia la data en la peticion post
+         headers: {
+             Authorization: `Bearer ${token()}`,
+         },
+      })
+      .then(() => {
+         nav("/admin/products")
+      })
+      .catch(err => {
+         setError(err)
+      })
+    }
     }
 
   return (
     <div className="login-container">
-    <h1>Agregar producto</h1>
+    <h1>
+      {`${params.id ? "Editar" : "Crear"}`} producto
+    </h1>
     <form onSubmit={handleSubmit}>
       <div className="field">
         <label htmlFor="name">Nombre producto</label>
         <input required
           type="text"
           name="name"
+          defaultValue={product.name}
+          
         />
       </div>
       <div className="field">
@@ -46,6 +101,7 @@ const Form = () => {
         <input required
           type="number"
           name="price"
+          defaultValue={product.price}
         />
       </div>
       <div className="field">
@@ -53,6 +109,7 @@ const Form = () => {
         <input required
           type="url"
           name="image"
+          defaultValue={product.image}
         />
       </div>
       <div className="field">
@@ -60,18 +117,13 @@ const Form = () => {
         <input required
           type="text"
           name="type"
+          defaultValue={product.type}
         />
       </div>
       <div className="submit">
-        <button type="submit" className="button">Crear producto</button>
-        {/* {error && (
-          <p className="error" >
-            {error.response.data}
-          </p>
-        )} */}
+        <button type="submit" className="button">Guardar</button>
       </div>
     </form>
-
   </div>
   )
 }
